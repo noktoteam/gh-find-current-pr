@@ -3,7 +3,7 @@ const github = require('@actions/github');
 
 async function main() {
     const token = core.getInput('github-token', { required: false }) || process.env.GITHUB_TOKEN;
-    const sha = core.getInput('sha', { required: true});
+    const sha = core.getInput('sha', { required: true });
 
     const octokit = github.getOctokit(token)
     const context = github.context;
@@ -13,7 +13,7 @@ async function main() {
         commit_sha: sha,
     });
 
-    const pr = result.data.length > 0 && result.data.filter(el => el.state === 'open')[0];
+    const pr = result.data.length > 0 && result.data[0];
 
     core.setOutput('pr', pr && pr.number || '');
     core.setOutput('number', pr && pr.number || '');
